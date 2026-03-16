@@ -1,42 +1,79 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { motion, useMotionValue, useSpring } from 'framer-motion';
+import { motion, useMotionValue, useSpring, AnimatePresence } from 'framer-motion';
+
+type Particle = {
+  id: number;
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+  life: number;
+  maxLife: number;
+  color: string;
+  size: number;
+  rotation: number;
+  rotationSpeed: number;
+  type: 'star' | 'circle';
+};
 
 export default function MagicCursor() {
   const [visible, setVisible] = useState(false);
   const [hovering, setHovering] = useState(false);
   const [clicking, setClicking] = useState(false);
-  const cursorX = useMotionValue(0);
-  const cursorY = useMotionValue(0);
-  const springConfig = { damping: 25, stiffness: 300, mass: 0.5 };
-  const ringX = useSpring(cursorX, springConfig);
-  const ringY = useSpring(cursorY, springConfig);
-  const trailRef = useRef<{ x: number; y: number; opacity: number; color: string }[]>([]);
+  
+  const cursorX = useMotionValue(-100);
+  const cursorY = useMotionValue(-100);
+  
+  const springConfig = { damping: 20, stiffness: 400, mass: 0.5 };
+  const smoothX = useSpring(cursorX, springConfig);
+  const smoothY = useSpring(cursorY, springConfig);
+
+  const particlesRef = useRef<Particle[]>([]);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const rafRef = useRef<number>(0);
+  const particleIdRef = useRef(0);
+
+  // Playful colors
+  const colors = ['#60a5fa', '#f87171', '#fbbf24', '#a78bfa', '#34d399', '#f472b6'];
 
   useEffect(() => {
-    // Only show custom cursor on desktop
     const isMobile = window.matchMedia('(max-width: 768px)').matches || 'ontouchstart' in window;
     if (isMobile) return;
 
     setVisible(true);
-    const colors = ['#3b82f6', '#ef4444', '#f59e0b', '#ec4899', '#8b5cf6'];
+
+    const spawnParticles = (x: number, y: number, count: number, isClick: false | true = false) => {
+      for (let i = 0; i < count; i++) {
+        const angle = Math.random() * Math.PI * 2;
+        // Clicks spawn particles faster and more explosively
+        const speed = isClick ? Math.random() * 8 + 4 : Math.random() * 3 + 0.5;
+        
+        particlesRef.current.push({
+          id: particleIdRef.current++,
+          x,
+          y,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed - (isClick ? 2 : 0), // Slight upward bias on click
+          life: 1,
+          maxLife: isClick ? Math.random() * 0.5 + 0.5 : Math.random() * 0.4 + 0.3,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          size: isClick ? Math.random() * 8 + 4 : Math.random() * 4 + 2,
+          rotation: Math.random() * 360,
+          rotationSpeed: (Math.random() - 0.5) * 10,
+          type: Math.random() > 0.6 ? 'star' : 'circle',
+        });
+      }
+    };
 
     const handleMouseMove = (e: MouseEvent) => {
       cursorX.set(e.clientX);
       cursorY.set(e.clientY);
 
-      // Add trail particle
-      trailRef.current.push({
-        x: e.clientX,
-        y: e.clientY,
-        opacity: 0.6,
-        color: colors[Math.floor(Math.random() * colors.length)],
-      });
-      if (trailRef.current.length > 20) {
-        trailRef.current.shift();
+      // Randomly spawn a few particles on movement
+      if (Math.random() > 0.4) {
+        spawnParticles(e.clientX, e.clientY, 1);
       }
     };
 
@@ -46,7 +83,12 @@ export default function MagicCursor() {
       setHovering(!!isInteractive);
     };
 
-    const handleMouseDown = () => setClicking(true);
+    const handleMouseDown = (e: MouseEvent) => {
+      setClicking(true);
+      // Explode confetes on click
+      spawnParticles(e.clientX, e.clientY, 15, true);
+    };
+    
     const handleMouseUp = () => setClicking(false);
 
     document.addEventListener('mousemove', handleMouseMove);
@@ -54,7 +96,7 @@ export default function MagicCursor() {
     document.addEventListener('mousedown', handleMouseDown);
     document.addEventListener('mouseup', handleMouseUp);
 
-    // Trail animation loop
+    // Canvas animation loop
     const canvas = canvasRef.current;
     if (canvas) {
       const ctx = canvas.getContext('2d');
@@ -62,23 +104,64 @@ export default function MagicCursor() {
       resize();
       window.addEventListener('resize', resize);
 
+      const drawStar = (cx: number, cy: number, spikes: number, outerRadius: number, innerRadius: number, color: string, alpha: number, rotation: number) => {
+        if (!ctx) return;
+        ctx.save();
+        ctx.translate(cx, cy);
+        ctx.rotate((rotation * Math.PI) / 180);
+        ctx.beginPath();
+        let x = 0, y = 0;
+        let step = Math.PI / spikes;
+        let rot = (Math.PI / 2) * 3;
+        ctx.moveTo(0, 0 - outerRadius);
+        for (let i = 0; i < spikes; i++) {
+          x = Math.cos(rot) * outerRadius;
+          y = Math.sin(rot) * outerRadius;
+          ctx.lineTo(x, y);
+          rot += step;
+          x = Math.cos(rot) * innerRadius;
+          y = Math.sin(rot) * innerRadius;
+          ctx.lineTo(x, y);
+          rot += step;
+        }
+        ctx.lineTo(0, 0 - outerRadius);
+        ctx.closePath();
+        ctx.fillStyle = color;
+        ctx.globalAlpha = alpha;
+        ctx.shadowBlur = 15;
+        ctx.shadowColor = color;
+        ctx.fill();
+        ctx.restore();
+      };
+
       const animate = () => {
         if (ctx) {
           ctx.clearRect(0, 0, canvas.width, canvas.height);
-          trailRef.current.forEach((p, i) => {
-            p.opacity -= 0.02;
-            ctx.beginPath();
-            // Draw a little "sparkle" or star-like circle
-            const size = 6 * (p.opacity / 0.6);
-            ctx.arc(p.x, p.y, size, 0, Math.PI * 2);
-            ctx.fillStyle = p.color;
-            ctx.globalAlpha = Math.max(0, p.opacity);
-            // Add a glow effect
-            ctx.shadowBlur = 10;
-            ctx.shadowColor = p.color;
-            ctx.fill();
+          
+          particlesRef.current.forEach((p) => {
+            // Physics update
+            p.x += p.vx;
+            p.y += p.vy;
+            p.vy += 0.1; // Gravity
+            p.life -= 0.015 / p.maxLife;
+            p.rotation += p.rotationSpeed;
+
+            const alpha = Math.max(0, p.life);
+
+            if (p.type === 'star') {
+              drawStar(p.x, p.y, 5, p.size * 1.5, p.size * 0.6, p.color, alpha, p.rotation);
+            } else {
+              ctx.beginPath();
+              ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+              ctx.fillStyle = p.color;
+              ctx.globalAlpha = alpha;
+              ctx.shadowBlur = 10;
+              ctx.shadowColor = p.color;
+              ctx.fill();
+            }
           });
-          trailRef.current = trailRef.current.filter(p => p.opacity > 0);
+          
+          particlesRef.current = particlesRef.current.filter(p => p.life > 0);
         }
         rafRef.current = requestAnimationFrame(animate);
       };
@@ -93,40 +176,73 @@ export default function MagicCursor() {
         cancelAnimationFrame(rafRef.current);
       };
     }
-  }, [cursorX, cursorY]);
+  }, [cursorX, cursorY, colors]);
 
   if (!visible) return null;
 
   return (
     <>
-      {/* Trail Canvas */}
       <canvas
         ref={canvasRef}
         className="fixed inset-0 pointer-events-none z-[9999]"
       />
 
-      {/* Magic Wand Emoji Cursor */}
+      {/* Main Cursor Element */}
       <motion.div
         className="fixed pointer-events-none z-[9999]"
         style={{
           x: cursorX,
           y: cursorY,
-          // Offset slightly so the wand tip acts as the exact cursor point
-          translateX: '-20%',
-          translateY: '-20%',
+        }}
+      >
+        {/* Playful Balloon/Wand Core */}
+        <motion.div
+          animate={{
+            scale: clicking ? 0.7 : hovering ? 1.4 : 1,
+            rotate: clicking ? -15 : hovering ? 15 : 0,
+          }}
+          transition={{ type: "spring", stiffness: 400, damping: 15 }}
+          className="relative flex items-center justify-center"
+          style={{ width: '32px', height: '32px', marginLeft: '-16px', marginTop: '-16px' }}
+        >
+          {/* Main Visual */}
+          <div className={`text-3xl drop-shadow-xl transition-all duration-300 filter ${hovering ? 'hue-rotate-90 brightness-110' : ''}`}>
+             🎈
+          </div>
+
+          {/* Hover Expanding Ring */}
+          <AnimatePresence>
+            {hovering && (
+              <motion.div
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{ scale: 1.8, opacity: 1 }}
+                exit={{ scale: 0, opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                className="absolute inset-0 rounded-full border-2 border-dashed border-secondary-400 animate-spin-slow"
+              />
+            )}
+          </AnimatePresence>
+        </motion.div>
+      </motion.div>
+
+      {/* Smooth Follower Ring */}
+      <motion.div
+        className="fixed pointer-events-none z-[9998]"
+        style={{
+          x: smoothX,
+          y: smoothY,
+          translateX: '-50%',
+          translateY: '-50%',
         }}
       >
         <motion.div
           animate={{
-            scale: clicking ? 0.8 : hovering ? 1.3 : 1,
-            rotate: clicking ? -20 : hovering ? 10 : 0,
+            width: hovering ? 60 : 20,
+            height: hovering ? 60 : 20,
+            opacity: clicking ? 0 : 0.4,
           }}
-          transition={{ type: "spring", stiffness: 300, damping: 20 }}
-          className="text-3xl sm:text-4xl drop-shadow-lg filter"
-          style={{ transformOrigin: 'bottom left' }}
-        >
-          🪄
-        </motion.div>
+          className="rounded-full bg-gradient-to-r from-primary-400 to-secondary-400 blur-md"
+        />
       </motion.div>
     </>
   );

@@ -26,8 +26,8 @@ export default function MagneticButton({ children, className = '', onClick, href
     const { height, width, left, top } = ref.current.getBoundingClientRect();
     const middleX = clientX - (left + width / 2);
     const middleY = clientY - (top + height / 2);
-    x.set(middleX * 0.4); // Magnetic pull strength
-    y.set(middleY * 0.4);
+    x.set(middleX * 0.1); // Magnetic pull strength
+    y.set(middleY * 0.1);
   };
 
   const handleMouseLeave = () => {

@@ -220,26 +220,6 @@ export default function MagicCursor() {
         </motion.div>
       </motion.div>
 
-      {/* Smooth Follower Ring */}
-      <motion.div
-        className="fixed pointer-events-none z-[9998]"
-        style={{
-          x: smoothX,
-          y: smoothY,
-          translateX: '-50%',
-          translateY: '-50%',
-        }}
-      >
-        <motion.div
-          animate={{
-            width: hovering ? 80 : 30,
-            height: hovering ? 80 : 30,
-            opacity: clicking ? 0 : 1,
-          }}
-          className="rounded-full bg-white transition-all duration-300 pointer-events-none"
-          style={{ mixBlendMode: 'difference' }}
-        />
-      </motion.div>
     </>
   );
 }

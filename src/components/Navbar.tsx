@@ -118,7 +118,7 @@ export default function Navbar() {
                 </motion.a>
               ))}
               <motion.a
-                href="https://wa.me/5500000000000"
+                href="https://wa.me/5562985545046?text=Ol%C3%A1%21%20Vim%20pelo%20site.%20Gostaria%20de%20mais%20informa%C3%A7%C3%B5es%20sobre%20a%20loca%C3%A7%C3%A3o%20de%20brinquedos%20para%20a%20minha%20festa%21%20%F0%9F%8E%89"
                 target="_blank"
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -173,7 +173,7 @@ export default function Navbar() {
                 </motion.a>
               ))}
               <motion.a
-                href="https://wa.me/5500000000000"
+                href="https://wa.me/5562985545046?text=Ol%C3%A1%21%20Vim%20pelo%20site.%20Gostaria%20de%20mais%20informa%C3%A7%C3%B5es%20sobre%20a%20loca%C3%A7%C3%A3o%20de%20brinquedos%20para%20a%20minha%20festa%21%20%F0%9F%8E%89"
                 target="_blank"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}

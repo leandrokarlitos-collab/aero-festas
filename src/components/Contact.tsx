@@ -7,8 +7,8 @@ import ScrollReveal from './animations/ScrollReveal';
 import TextReveal from './animations/TextReveal';
 
 const contactInfo = [
-  { icon: FaWhatsapp, label: 'WhatsApp', value: '(00) 00000-0000', href: 'https://wa.me/5500000000000', color: 'bg-green-500' },
-  { icon: FaPhone, label: 'Telefone', value: '(00) 0000-0000', href: 'tel:+550000000000', color: 'bg-primary-500' },
+  { icon: FaWhatsapp, label: 'WhatsApp', value: '(62) 98554-5046', href: 'https://wa.me/5562985545046?text=Ol%C3%A1%21%20Vim%20pelo%20site.%20Gostaria%20de%20mais%20informa%C3%A7%C3%B5es%20sobre%20a%20loca%C3%A7%C3%A3o%20de%20brinquedos%20para%20a%20minha%20festa%21%20%F0%9F%8E%89', color: 'bg-green-500' },
+  { icon: FaPhone, label: 'Telefone', value: '(62) 98554-5046', href: 'tel:+5562985545046', color: 'bg-primary-500' },
   { icon: FaEnvelope, label: 'E-mail', value: 'contato@aerofestas.com.br', href: 'mailto:contato@aerofestas.com.br', color: 'bg-secondary-500' },
   { icon: FaMapMarkerAlt, label: 'Endereço', value: 'Sua Cidade - Estado', href: '#', color: 'bg-accent-purple' },
   { icon: FaClock, label: 'Horário', value: 'Seg-Sáb: 8h às 20h', href: '#', color: 'bg-accent-gold' },
@@ -20,8 +20,8 @@ export default function Contact() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const text = `Olá! Me chamo ${formState.name}. Gostaria de um orçamento para a data ${formState.date}. ${formState.message}`;
-    window.open(`https://wa.me/5500000000000?text=${encodeURIComponent(text)}`, '_blank');
+    const text = `Olá! Vim pelo site. Gostaria de mais informações sobre a locação de brinquedos para a minha festa! 🎉\n\nMe chammo ${formState.name}. Gostaria de um orçamento para a data ${formState.date}. ${formState.message}`;
+    window.open(`https://wa.me/5562985545046?text=${encodeURIComponent(text)}`, '_blank');
     setSubmitted(true);
     setTimeout(() => setSubmitted(false), 3000);
   };

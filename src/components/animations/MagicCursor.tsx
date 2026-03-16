@@ -66,11 +66,16 @@ export default function MagicCursor() {
         if (ctx) {
           ctx.clearRect(0, 0, canvas.width, canvas.height);
           trailRef.current.forEach((p, i) => {
-            p.opacity -= 0.025;
+            p.opacity -= 0.02;
             ctx.beginPath();
-            ctx.arc(p.x, p.y, 3 * (p.opacity / 0.6), 0, Math.PI * 2);
+            // Draw a little "sparkle" or star-like circle
+            const size = 6 * (p.opacity / 0.6);
+            ctx.arc(p.x, p.y, size, 0, Math.PI * 2);
             ctx.fillStyle = p.color;
             ctx.globalAlpha = Math.max(0, p.opacity);
+            // Add a glow effect
+            ctx.shadowBlur = 10;
+            ctx.shadowColor = p.color;
             ctx.fill();
           });
           trailRef.current = trailRef.current.filter(p => p.opacity > 0);
@@ -100,46 +105,28 @@ export default function MagicCursor() {
         className="fixed inset-0 pointer-events-none z-[9999]"
       />
 
-      {/* Dot (follows cursor exactly) */}
+      {/* Magic Wand Emoji Cursor */}
       <motion.div
-        className="fixed pointer-events-none z-[9999] mix-blend-difference"
+        className="fixed pointer-events-none z-[9999]"
         style={{
           x: cursorX,
           y: cursorY,
-          translateX: '-50%',
-          translateY: '-50%',
+          // Offset slightly so the wand tip acts as the exact cursor point
+          translateX: '-20%',
+          translateY: '-20%',
         }}
       >
         <motion.div
           animate={{
-            width: clicking ? 6 : hovering ? 0 : 8,
-            height: clicking ? 6 : hovering ? 0 : 8,
+            scale: clicking ? 0.8 : hovering ? 1.3 : 1,
+            rotate: clicking ? -20 : hovering ? 10 : 0,
           }}
-          transition={{ duration: 0.15 }}
-          className="rounded-full bg-white"
-        />
-      </motion.div>
-
-      {/* Ring (follows with spring delay) */}
-      <motion.div
-        className="fixed pointer-events-none z-[9999] mix-blend-difference"
-        style={{
-          x: ringX,
-          y: ringY,
-          translateX: '-50%',
-          translateY: '-50%',
-        }}
-      >
-        <motion.div
-          animate={{
-            width: clicking ? 30 : hovering ? 50 : 36,
-            height: clicking ? 30 : hovering ? 50 : 36,
-            borderWidth: hovering ? 2 : 1.5,
-          }}
-          transition={{ duration: 0.2, ease: 'easeOut' }}
-          className="rounded-full border-white/80"
-          style={{ borderStyle: 'solid' }}
-        />
+          transition={{ type: "spring", stiffness: 300, damping: 20 }}
+          className="text-3xl sm:text-4xl drop-shadow-lg filter"
+          style={{ transformOrigin: 'bottom left' }}
+        >
+          🪄
+        </motion.div>
       </motion.div>
     </>
   );

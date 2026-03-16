@@ -63,7 +63,7 @@ export default function Hero() {
     <section
       ref={sectionRef}
       id="inicio"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-28 pb-10"
       onMouseMove={handleMouseMove}
     >
       {/* Background Gradient */}

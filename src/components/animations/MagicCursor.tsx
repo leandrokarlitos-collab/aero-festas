@@ -70,11 +70,6 @@ export default function MagicCursor() {
     const handleMouseMove = (e: MouseEvent) => {
       cursorX.set(e.clientX);
       cursorY.set(e.clientY);
-
-      // Randomly spawn a few particles on movement
-      if (Math.random() > 0.4) {
-        spawnParticles(e.clientX, e.clientY, 1);
-      }
     };
 
     const handleMouseOver = (e: MouseEvent) => {

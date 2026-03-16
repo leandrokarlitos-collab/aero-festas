@@ -232,11 +232,12 @@ export default function MagicCursor() {
       >
         <motion.div
           animate={{
-            width: hovering ? 60 : 20,
-            height: hovering ? 60 : 20,
-            opacity: clicking ? 0 : 0.4,
+            width: hovering ? 80 : 30,
+            height: hovering ? 80 : 30,
+            opacity: clicking ? 0 : 1,
           }}
-          className="rounded-full bg-gradient-to-r from-primary-400 to-secondary-400 blur-md"
+          className="rounded-full bg-white transition-all duration-300 pointer-events-none"
+          style={{ mixBlendMode: 'difference' }}
         />
       </motion.div>
     </>

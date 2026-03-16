@@ -5,6 +5,7 @@ import { useState, useRef } from 'react';
 import { FaStar, FaWhatsapp } from 'react-icons/fa';
 import ScrollReveal from './animations/ScrollReveal';
 import TextReveal from './animations/TextReveal';
+import { useMotionValue, useSpring, useTransform } from 'framer-motion';
 
 const categories = ['Todos', 'Infláveis', 'Pula-Pula', 'Tobogãs', 'Jogos'];
 
@@ -19,33 +20,61 @@ const toys = [
   { id: 9, name: 'Touro Mecânico', category: 'Jogos', popular: true, color: 'from-red-500 to-orange-500', emoji: '🐂' },
 ];
 
-function TiltCard({ children, className }: { children: React.ReactNode; className?: string }) {
+function TiltCard({ children, className = '' }: { children: React.ReactNode; className?: string }) {
   const ref = useRef<HTMLDivElement>(null);
 
-  const handleMouseMove = (e: React.MouseEvent) => {
-    const el = ref.current;
-    if (!el) return;
-    const rect = el.getBoundingClientRect();
-    const x = (e.clientX - rect.left) / rect.width - 0.5;
-    const y = (e.clientY - rect.top) / rect.height - 0.5;
-    el.style.transform = `perspective(800px) rotateY(${x * 10}deg) rotateX(${-y * 10}deg) scale(1.02)`;
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+
+  const mouseXSpring = useSpring(x, { stiffness: 300, damping: 30 });
+  const mouseYSpring = useSpring(y, { stiffness: 300, damping: 30 });
+
+  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ['10deg', '-10deg']);
+  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ['-10deg', '10deg']);
+
+  // Glare effect
+  const glareX = useTransform(mouseXSpring, [-0.5, 0.5], ['100%', '0%']);
+  const glareY = useTransform(mouseYSpring, [-0.5, 0.5], ['100%', '0%']);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    const rect = ref.current?.getBoundingClientRect();
+    if (!rect) return;
+    const width = rect.width;
+    const height = rect.height;
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+    const xPct = mouseX / width - 0.5;
+    const yPct = mouseY / height - 0.5;
+    x.set(xPct);
+    y.set(yPct);
   };
 
   const handleMouseLeave = () => {
-    const el = ref.current;
-    if (el) el.style.transform = 'perspective(800px) rotateY(0deg) rotateX(0deg) scale(1)';
+    x.set(0);
+    y.set(0);
   };
 
   return (
-    <div
+    <motion.div
       ref={ref}
-      className={className}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      style={{ transition: 'transform 0.3s ease-out', transformStyle: 'preserve-3d' }}
+      style={{
+        rotateX,
+        rotateY,
+        transformStyle: 'preserve-3d',
+      }}
+      className={`relative group ${className}`}
     >
+      <div
+        className="absolute inset-0 z-50 pointer-events-none rounded-3xl"
+        style={{
+          background: `radial-gradient(circle at ${glareX.get()} ${glareY.get()}, rgba(255,255,255,0.2) 0%, transparent 60%)`,
+          opacity: 0,
+        }}
+      />
       {children}
-    </div>
+    </motion.div>
   );
 }
 

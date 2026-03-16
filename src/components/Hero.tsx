@@ -3,6 +3,7 @@
 import { motion, useScroll, useTransform, useMotionValue, useSpring, Variants } from 'framer-motion';
 import { useEffect, useState, useRef } from 'react';
 import { FaWhatsapp, FaArrowDown } from 'react-icons/fa';
+import MagneticButton from './animations/MagneticButton';
 
 const words = ['Inesquecível', 'Mágica', 'Encantadora', 'Especial', 'Perfeita'];
 
@@ -48,14 +49,14 @@ export default function Hero() {
   const titleContainer: Variants = {
     hidden: {},
     visible: {
-      transition: { staggerChildren: 0.12, delayChildren: 0.3 },
+      transition: { staggerChildren: 0.08, delayChildren: 0.2 },
     },
   };
   const titleWord: Variants = {
-    hidden: { y: 80, opacity: 0, rotateX: -40 },
+    hidden: { y: 100, opacity: 0, rotateX: -50 },
     visible: {
       y: 0, opacity: 1, rotateX: 0,
-      transition: { duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] },
+      transition: { duration: 0.9, ease: [0.16, 1, 0.3, 1] },
     },
   };
 
@@ -109,13 +110,13 @@ export default function Hero() {
       >
         {/* Badge */}
         <motion.div
-          initial={{ opacity: 0, y: 30, scale: 0.9 }}
+          initial={{ opacity: 0, y: 30, scale: 0.95 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 mb-8"
+          transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
+          className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-white/5 backdrop-blur-xl border border-white/10 mb-8 shadow-2xl"
         >
-          <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-          <span className="text-white/80 text-sm font-medium">Locação de Brinquedos para Festas e Eventos</span>
+          <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse shadow-[0_0_10px_rgba(74,222,128,0.8)]" />
+          <span className="text-white/90 text-sm font-medium tracking-wide">Locação de Brinquedos Premium</span>
         </motion.div>
 
         {/* Title with Staggered Word Reveal */}
@@ -165,10 +166,10 @@ export default function Hero() {
 
         {/* Subtitle with blur reveal */}
         <motion.p
-          initial={{ opacity: 0, y: 30, filter: 'blur(10px)' }}
+          initial={{ opacity: 0, y: 40, filter: 'blur(10px)' }}
           animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-          transition={{ duration: 0.8, delay: 0.8 }}
-          className="text-lg sm:text-xl text-white/70 max-w-2xl mx-auto mb-10 leading-relaxed"
+          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.6 }}
+          className="text-lg sm:text-2xl text-white/80 max-w-2xl mx-auto mb-12 leading-relaxed font-light"
         >
           Transformamos momentos em memórias com brinquedos infláveis,
           pula-pulas, tobogãs e muito mais. A diversão garantida para sua festa!
@@ -178,30 +179,26 @@ export default function Hero() {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4"
+          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.8 }}
+          className="flex flex-col sm:flex-row items-center justify-center gap-6"
         >
-          <motion.a
+          <MagneticButton
             href="https://wa.me/5562985545046?text=Ol%C3%A1%21%20Vim%20pelo%20site.%20Gostaria%20de%20mais%20informa%C3%A7%C3%B5es%20sobre%20a%20loca%C3%A7%C3%A3o%20de%20brinquedos%20para%20a%20minha%20festa%21%20%F0%9F%8E%89"
             target="_blank"
-            whileHover={{ scale: 1.05, y: -3 }}
-            whileTap={{ scale: 0.95 }}
-            className="group relative px-8 py-4 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-2xl font-bold text-lg shadow-2xl shadow-green-500/30 hover:shadow-green-500/50 transition-all duration-300 flex items-center gap-3 overflow-hidden"
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-green-400 to-green-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            <FaWhatsapp size={24} className="relative z-10" />
-            <span className="relative z-10">Faça seu Orçamento</span>
-          </motion.a>
+            <div className="group relative px-8 py-4 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-2xl font-bold text-lg shadow-[0_0_40px_rgba(34,197,94,0.3)] hover:shadow-[0_0_60px_rgba(34,197,94,0.5)] transition-all duration-500 flex items-center gap-3 overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-r from-green-400 to-green-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <FaWhatsapp size={24} className="relative z-10" />
+              <span className="relative z-10">Faça seu Orçamento</span>
+            </div>
+          </MagneticButton>
 
-          <motion.a
-            href="#catalogo"
-            whileHover={{ scale: 1.05, y: -3 }}
-            whileTap={{ scale: 0.95 }}
-            className="group px-8 py-4 bg-white/10 backdrop-blur-sm border border-white/20 text-white rounded-2xl font-bold text-lg hover:bg-white/20 transition-all duration-300 relative overflow-hidden"
-          >
-            <span className="relative z-10">Ver Brinquedos</span>
-            <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
-          </motion.a>
+          <MagneticButton href="#catalogo">
+            <div className="group px-8 py-4 glass-premium text-white rounded-2xl font-bold text-lg hover:bg-white/10 transition-all duration-500 relative overflow-hidden">
+              <span className="relative z-10">Ver Brinquedos</span>
+              <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
+            </div>
+          </MagneticButton>
         </motion.div>
 
         {/* Stats */}

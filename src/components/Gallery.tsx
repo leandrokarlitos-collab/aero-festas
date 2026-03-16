@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { FaTimes, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import ScrollReveal from './animations/ScrollReveal';
 import TextReveal from './animations/TextReveal';
+import TiltCard from './animations/TiltCard';
 
 const galleryItems = [
   { emoji: '🎪', label: 'Evento Corporativo', color: 'from-blue-400 to-blue-600' },
@@ -39,25 +40,28 @@ export default function Gallery() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {galleryItems.map((item, i) => (
             <ScrollReveal key={i} delay={0.08 * i}>
-              <motion.div
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.98 }}
-                onClick={() => setLightboxIndex(i)}
-                className={`relative cursor-pointer rounded-2xl overflow-hidden shadow-lg group ${
-                  i % 3 === 0 ? 'row-span-2 aspect-[3/4]' : 'aspect-square'
-                }`}
-              >
-                <div className={`absolute inset-0 bg-gradient-to-br ${item.color}`} />
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="text-6xl group-hover:scale-125 transition-transform duration-500">
-                    {item.emoji}
-                  </span>
-                </div>
-                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300" />
-                <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/50 to-transparent translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                  <p className="text-white font-semibold text-sm">{item.label}</p>
-                </div>
-              </motion.div>
+              <TiltCard className="h-full">
+                <motion.div
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() => setLightboxIndex(i)}
+                  className={`relative cursor-pointer rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 h-full group ${
+                    i % 3 === 0 ? 'row-span-2 aspect-[3/4]' : 'aspect-square'
+                  }`}
+                >
+                  <div className={`absolute inset-0 bg-gradient-to-br ${item.color}`} />
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <span className="text-6xl group-hover:scale-130 transition-transform duration-700 ease-[0.16,1,0.3,1] z-10 block">
+                      {item.emoji}
+                    </span>
+                  </div>
+                  {/* Premium overlay with subtle glass look on hover */}
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-300" />
+                  <div className="absolute bottom-0 left-0 right-0 p-5 bg-gradient-to-t from-black/60 via-black/30 to-transparent translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[0.16,1,0.3,1]">
+                    <p className="text-white font-bold text-sm tracking-wide">{item.label}</p>
+                  </div>
+                </motion.div>
+              </TiltCard>
             </ScrollReveal>
           ))}
         </div>

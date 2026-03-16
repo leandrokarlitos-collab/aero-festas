@@ -6,18 +6,17 @@ import { FaStar, FaWhatsapp } from 'react-icons/fa';
 import ScrollReveal from './animations/ScrollReveal';
 import TextReveal from './animations/TextReveal';
 
-const categories = ['Todos', 'Infláveis', 'Pula-Pula', 'Tobogãs', 'Jogos', 'Mesas & Cadeiras'];
+const categories = ['Todos', 'Infláveis', 'Pula-Pula', 'Tobogãs', 'Jogos'];
 
 const toys = [
-  { id: 1, name: 'Pula-Pula Castelo Encantado', category: 'Pula-Pula', price: 'A partir de R$ 250', rating: 5, popular: true, color: 'from-blue-400 to-blue-600', emoji: '🏰' },
-  { id: 2, name: 'Tobogã Radical Duplo', category: 'Tobogãs', price: 'A partir de R$ 450', rating: 5, popular: true, color: 'from-red-400 to-red-600', emoji: '🎢' },
-  { id: 3, name: 'Piscina de Bolinhas Gigante', category: 'Infláveis', price: 'A partir de R$ 300', rating: 4, popular: false, color: 'from-purple-400 to-purple-600', emoji: '🎱' },
-  { id: 4, name: 'Futebol de Sabão', category: 'Jogos', price: 'A partir de R$ 350', rating: 5, popular: true, color: 'from-green-400 to-green-600', emoji: '⚽' },
-  { id: 5, name: 'Cama Elástica Premium', category: 'Pula-Pula', price: 'A partir de R$ 200', rating: 4, popular: false, color: 'from-yellow-400 to-orange-500', emoji: '🤸' },
-  { id: 6, name: 'Tobogã Aquático', category: 'Tobogãs', price: 'A partir de R$ 500', rating: 5, popular: true, color: 'from-cyan-400 to-blue-500', emoji: '💦' },
-  { id: 7, name: 'Castelo Inflável Real', category: 'Infláveis', price: 'A partir de R$ 400', rating: 5, popular: false, color: 'from-pink-400 to-rose-600', emoji: '👑' },
-  { id: 8, name: 'Mesa & Cadeira Kids (kit)', category: 'Mesas & Cadeiras', price: 'A partir de R$ 80', rating: 4, popular: false, color: 'from-amber-400 to-amber-600', emoji: '🪑' },
-  { id: 9, name: 'Touro Mecânico', category: 'Jogos', price: 'A partir de R$ 600', rating: 5, popular: true, color: 'from-red-500 to-orange-500', emoji: '🐂' },
+  { id: 1, name: 'Pula-Pula Castelo Encantado', category: 'Pula-Pula', popular: true, color: 'from-blue-400 to-blue-600', emoji: '🏰' },
+  { id: 2, name: 'Tobogã Radical Duplo', category: 'Tobogãs', popular: true, color: 'from-red-400 to-red-600', emoji: '🎢' },
+  { id: 3, name: 'Piscina de Bolinhas Gigante', category: 'Infláveis', popular: false, color: 'from-purple-400 to-purple-600', emoji: '🎱' },
+  { id: 4, name: 'Futebol de Sabão', category: 'Jogos', popular: true, color: 'from-green-400 to-green-600', emoji: '⚽' },
+  { id: 5, name: 'Cama Elástica Premium', category: 'Pula-Pula', popular: false, color: 'from-yellow-400 to-orange-500', emoji: '🤸' },
+  { id: 6, name: 'Tobogã Aquático', category: 'Tobogãs', popular: true, color: 'from-cyan-400 to-blue-500', emoji: '💦' },
+  { id: 7, name: 'Castelo Inflável Real', category: 'Infláveis', popular: false, color: 'from-pink-400 to-rose-600', emoji: '👑' },
+  { id: 9, name: 'Touro Mecânico', category: 'Jogos', popular: true, color: 'from-red-500 to-orange-500', emoji: '🐂' },
 ];
 
 function TiltCard({ children, className }: { children: React.ReactNode; className?: string }) {
@@ -138,17 +137,11 @@ export default function Catalog() {
 
                     {/* Content */}
                     <div className="p-6">
-                      <div className="flex items-center gap-1 mb-2">
-                        {Array.from({ length: 5 }).map((_, s) => (
-                          <FaStar key={s} size={12} className={s < toy.rating ? 'text-accent-gold' : 'text-gray-200'} />
-                        ))}
-                      </div>
-                      <h3 className="text-lg font-bold text-gray-900 mb-1 group-hover:text-primary-600 transition-colors">
+                      <h3 className="text-lg font-bold text-gray-900 mt-2 mb-1 group-hover:text-primary-600 transition-colors">
                         {toy.name}
                       </h3>
                       <p className="text-sm text-gray-500 mb-4">{toy.category}</p>
-                      <div className="flex items-center justify-between">
-                        <span className="text-primary-600 font-bold text-lg">{toy.price}</span>
+                      <div className="flex items-center justify-end mt-4">
                         <motion.a
                           href="https://wa.me/5500000000000"
                           target="_blank"

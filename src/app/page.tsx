@@ -39,14 +39,8 @@ function LoadingScreen({ onComplete }: { onComplete: () => void }) {
           transition={{ duration: 0.8, type: 'spring', stiffness: 150 }}
           className="mb-8"
         >
-          <div className="w-24 h-24 mx-auto rounded-3xl bg-gradient-to-br from-primary-400 to-secondary-500 flex items-center justify-center shadow-2xl">
-            <motion.span
-              animate={{ rotateY: [0, 360] }}
-              transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
-              className="text-white text-4xl font-bold"
-            >
-              A
-            </motion.span>
+          <div className="w-32 h-32 mx-auto flex items-center justify-center drop-shadow-2xl">
+            <img src="/images/logo.png" alt="Logo Aero Festas" className="w-full h-full object-contain" />
           </div>
         </motion.div>
 

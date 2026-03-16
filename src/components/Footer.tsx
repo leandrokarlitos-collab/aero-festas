@@ -37,8 +37,8 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-500 to-secondary-500 flex items-center justify-center">
-                <span className="text-white font-bold">A</span>
+              <div className="w-12 h-12 flex items-center justify-center drop-shadow-md">
+                <img src="/images/logo.png" alt="Logo Aero Festas" className="w-full h-full object-contain" />
               </div>
               <span className="text-xl font-bold font-heading">
                 Aero <span className="text-secondary-400">Festas</span>

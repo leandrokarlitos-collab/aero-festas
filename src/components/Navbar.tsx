@@ -68,11 +68,8 @@ export default function Navbar() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              <div className="relative">
-                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-primary-500 to-secondary-500 flex items-center justify-center shadow-lg group-hover:shadow-primary-500/40 transition-shadow duration-300">
-                  <span className="text-white font-bold text-xl">A</span>
-                </div>
-                <div className="absolute -top-1 -right-1 w-4 h-4 bg-accent-gold rounded-full animate-bounce" />
+              <div className="relative w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center drop-shadow-md group-hover:drop-shadow-xl transition-all duration-300">
+                <img src="/images/logo.png" alt="Logo Aero Festas" className="w-full h-full object-contain" />
               </div>
               <div>
                 <span className={`text-xl font-bold font-heading transition-colors duration-300 ${

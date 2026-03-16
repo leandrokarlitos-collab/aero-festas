@@ -158,6 +158,38 @@ export default function Catalog() {
                 </TiltCard>
               </motion.div>
             ))}
+
+            {/* "Ver todas as opções" Extra Card */}
+            <motion.div
+              layout
+              key="all-options-card"
+              initial={{ opacity: 0, scale: 0.8, y: 40 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.8, y: 40 }}
+              transition={{ duration: 0.4, delay: filtered.length * 0.08 }}
+              className="group relative h-full min-h-[350px]"
+            >
+              <TiltCard className="h-full">
+                <a
+                  href="https://wa.me/5562985545046?text=Ol%C3%A1%21%20Vim%20pelo%20site.%20Gostaria%20de%20ver%20todas%20as%20op%C3%A7%C3%B5es%20de%20brinquedos%20para%20a%20minha%20festa%21%20%F0%9F%8E%89"
+                  target="_blank"
+                  className="relative flex flex-col items-center justify-center p-8 text-center bg-gradient-to-br from-primary-500 to-secondary-500 rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 border border-transparent hover:border-white/50 h-full cursor-pointer"
+                >
+                  <div className="absolute inset-0 bg-white/5 group-hover:bg-transparent transition-colors duration-500" />
+                  <span className="text-7xl mb-6 relative z-10 group-hover:scale-125 group-hover:rotate-12 transition-transform duration-500 ease-out">
+                    🎉
+                  </span>
+                  <h3 className="text-2xl font-bold font-heading text-white mb-3 relative z-10">
+                    Ver Mais Opções
+                  </h3>
+                  <p className="text-white/85 text-sm max-w-xs relative z-10">
+                    Fale com a gente no WhatsApp para conferir nosso catálogo!
+                  </p>
+                  {/* Decorative glow */}
+                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-white/20 blur-3xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                </a>
+              </TiltCard>
+            </motion.div>
           </AnimatePresence>
         </motion.div>
       </div>

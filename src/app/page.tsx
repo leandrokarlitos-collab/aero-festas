@@ -40,7 +40,7 @@ function LoadingScreen({ onComplete }: { onComplete: () => void }) {
           className="mb-8"
         >
           <div className="w-32 h-32 mx-auto flex items-center justify-center drop-shadow-2xl">
-            <img src="/images/logo.png" alt="Logo Aero Festas" className="w-full h-full object-contain" />
+            <img src="/images/logo-icon.png" alt="Logo Aero Festas" className="w-full h-full object-contain" />
           </div>
         </motion.div>
 

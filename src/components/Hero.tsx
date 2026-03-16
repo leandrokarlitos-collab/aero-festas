@@ -30,7 +30,7 @@ export default function Hero() {
   useEffect(() => {
     const interval = setInterval(() => {
       setWordIndex((prev) => (prev + 1) % words.length);
-    }, 3000);
+    }, 1500);
     return () => clearInterval(interval);
   }, []);
 
@@ -139,10 +139,10 @@ export default function Hero() {
           <span className="relative inline-block">
             <motion.span
               key={wordIndex}
-              initial={{ opacity: 0, y: 40, rotateX: -90, filter: 'blur(10px)' }}
-              animate={{ opacity: 1, y: 0, rotateX: 0, filter: 'blur(0px)' }}
-              exit={{ opacity: 0, y: -40, rotateX: 90, filter: 'blur(10px)' }}
-              transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.3, ease: 'easeOut' }}
               className="text-gradient inline-block"
               style={{
                 background: 'linear-gradient(135deg, #60a5fa, #f87171, #fbbf24)',

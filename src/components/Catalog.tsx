@@ -108,14 +108,14 @@ export default function Catalog() {
 
         {/* Category Filters */}
         <ScrollReveal delay={0.2}>
-          <div className="flex flex-wrap justify-center gap-3 mb-12">
+          <div className="flex overflow-x-auto md:flex-wrap justify-start md:justify-center gap-3 mb-12 pb-4 -mx-4 px-4 md:px-0 md:mx-0 snap-x hide-scrollbar">
             {categories.map((cat) => (
               <motion.button
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className={`px-5 py-2.5 rounded-2xl text-sm font-semibold transition-all duration-300 ${
+                className={`flex-shrink-0 snap-center px-6 py-3 md:px-5 md:py-2.5 rounded-2xl text-sm font-semibold transition-all duration-300 ${
                   activeCategory === cat
                     ? 'bg-gradient-to-r from-primary-500 to-primary-600 text-white shadow-lg shadow-primary-500/30'
                     : 'bg-white text-gray-600 hover:bg-primary-50 border border-gray-200 hover:border-primary-200'

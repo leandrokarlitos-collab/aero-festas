@@ -135,53 +135,64 @@ export default function Navbar() {
 
             {/* Mobile Toggle */}
             <motion.button
-              whileTap={{ scale: 0.9 }}
+              whileTap={{ scale: 0.85 }}
               onClick={() => setMobileOpen(!mobileOpen)}
-              className={`md:hidden p-2 rounded-xl ${scrolled ? 'text-primary-800' : 'text-white'}`}
+              className={`md:hidden relative z-50 p-2 rounded-2xl ${scrolled || mobileOpen ? 'text-primary-800' : 'text-white'}`}
             >
-              {mobileOpen ? <HiX size={28} /> : <HiMenu size={28} />}
+              {mobileOpen ? <HiX size={32} /> : <HiMenu size={32} />}
             </motion.button>
           </div>
         </div>
       </motion.nav>
 
-      {/* Mobile Menu */}
+      {/* Mobile Premium Full-Screen Menu */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="fixed inset-x-0 top-20 z-40 bg-white/95 backdrop-blur-xl border-b border-gray-100 shadow-2xl md:hidden"
+            initial={{ opacity: 0, clipPath: 'circle(0% at top right)' }}
+            animate={{ opacity: 1, clipPath: 'circle(150% at top right)' }}
+            exit={{ opacity: 0, clipPath: 'circle(0% at top right)' }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            className="fixed inset-0 z-40 bg-white/95 backdrop-blur-3xl md:hidden overflow-hidden flex flex-col justify-center"
           >
-            <div className="flex flex-col p-6 gap-2">
+            {/* Background Decor */}
+            <div className="absolute top-0 right-0 w-96 h-96 bg-primary-100 rounded-full blur-3xl opacity-50 -translate-y-1/2 translate-x-1/2" />
+            <div className="absolute bottom-0 left-0 w-96 h-96 bg-secondary-100 rounded-full blur-3xl opacity-50 translate-y-1/2 -translate-x-1/2" />
+
+            <div className="flex flex-col px-8 gap-4 relative z-10 w-full max-w-sm mx-auto">
               {navLinks.map((link, i) => (
                 <motion.a
                   key={link.name}
                   href={link.href}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.05 * i }}
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ delay: 0.1 * i, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
                   onClick={() => setMobileOpen(false)}
-                  className={`px-4 py-3 rounded-xl font-medium transition-all duration-200 ${
+                  className={`text-3xl font-heading font-bold py-4 border-b border-gray-100 transition-colors ${
                     activeSection === link.href
-                      ? 'text-primary-600 bg-primary-50'
-                      : 'text-gray-700 hover:text-primary-600 hover:bg-primary-50'
+                      ? 'text-primary-600'
+                      : 'text-gray-900 hover:text-primary-500'
                   }`}
                 >
                   {link.name}
                 </motion.a>
               ))}
-              <motion.a
-                href="https://wa.me/5562985545046?text=Ol%C3%A1%21%20Vim%20pelo%20site.%20Gostaria%20de%20mais%20informa%C3%A7%C3%B5es%20sobre%20a%20loca%C3%A7%C3%A3o%20de%20brinquedos%20para%20a%20minha%20festa%21%20%F0%9F%8E%89"
-                target="_blank"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.4 }}
-                className="mt-2 px-6 py-3 bg-gradient-to-r from-primary-500 to-primary-600 text-white rounded-2xl text-center font-semibold shadow-lg"
+              
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5, duration: 0.5 }}
+                className="mt-8"
               >
-                Orçamento Grátis
-              </motion.a>
+                <a
+                  href="https://wa.me/5562985545046?text=Ol%C3%A1%21%20Vim%20pelo%20site.%20Gostaria%20de%20mais%20informa%C3%A7%C3%B5es%20sobre%20a%20loca%C3%A7%C3%A3o%20de%20brinquedos%20para%20a%20minha%20festa%21%20%F0%9F%8E%89"
+                  target="_blank"
+                  className="block w-full py-4 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-2xl text-center font-bold text-lg shadow-[0_0_30px_rgba(34,197,94,0.3)] hover:shadow-[0_0_40px_rgba(34,197,94,0.5)] transition-shadow"
+                >
+                  Falar no WhatsApp
+                </a>
+              </motion.div>
             </div>
           </motion.div>
         )}

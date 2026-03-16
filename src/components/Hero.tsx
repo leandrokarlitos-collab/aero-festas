@@ -64,7 +64,7 @@ export default function Hero() {
     <section
       ref={sectionRef}
       id="inicio"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-28 pb-10"
+      className="relative min-h-[100svh] flex items-center justify-center overflow-hidden pt-32 sm:pt-28 pb-10"
       onMouseMove={handleMouseMove}
     >
       {/* Background Gradient */}
@@ -124,7 +124,7 @@ export default function Hero() {
           variants={titleContainer}
           initial="hidden"
           animate="visible"
-          className="text-5xl sm:text-6xl lg:text-8xl font-bold font-heading text-white leading-tight mb-6"
+          className="text-4xl sm:text-6xl lg:text-8xl font-bold font-heading text-white leading-tight mb-6"
           style={{ perspective: '600px' }}
         >
           <span className="flex flex-wrap justify-center">
@@ -169,7 +169,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 40, filter: 'blur(10px)' }}
           animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
           transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.6 }}
-          className="text-lg sm:text-2xl text-white/80 max-w-2xl mx-auto mb-12 leading-relaxed font-light"
+          className="text-base sm:text-2xl text-white/80 max-w-2xl mx-auto mb-10 sm:mb-12 leading-relaxed font-light px-2 sm:px-0"
         >
           Transformamos momentos em memórias com brinquedos infláveis,
           pula-pulas, tobogãs e muito mais. A diversão garantida para sua festa!
@@ -180,22 +180,23 @@ export default function Hero() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.8 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-6"
+          className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 w-full max-w-sm sm:max-w-none mx-auto"
         >
           <MagneticButton
             href="https://wa.me/5562985545046?text=Ol%C3%A1%21%20Vim%20pelo%20site.%20Gostaria%20de%20mais%20informa%C3%A7%C3%B5es%20sobre%20a%20loca%C3%A7%C3%A3o%20de%20brinquedos%20para%20a%20minha%20festa%21%20%F0%9F%8E%89"
             target="_blank"
+            className="w-full sm:w-auto"
           >
-            <div className="group relative px-8 py-4 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-2xl font-bold text-lg shadow-[0_0_40px_rgba(34,197,94,0.3)] hover:shadow-[0_0_60px_rgba(34,197,94,0.5)] transition-all duration-500 flex items-center gap-3 overflow-hidden">
+            <div className="group relative w-full sm:w-auto px-6 sm:px-8 py-4 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-2xl font-bold text-base sm:text-lg shadow-[0_0_40px_rgba(34,197,94,0.3)] hover:shadow-[0_0_60px_rgba(34,197,94,0.5)] transition-all duration-500 flex items-center justify-center gap-3 overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-r from-green-400 to-green-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               <FaWhatsapp size={24} className="relative z-10" />
-              <span className="relative z-10">Faça seu Orçamento</span>
+              <span className="relative z-10 whitespace-nowrap">Faça seu Orçamento</span>
             </div>
           </MagneticButton>
 
-          <MagneticButton href="#catalogo">
-            <div className="group px-8 py-4 glass-premium text-white rounded-2xl font-bold text-lg hover:bg-white/10 transition-all duration-500 relative overflow-hidden">
-              <span className="relative z-10">Ver Brinquedos</span>
+          <MagneticButton href="#catalogo" className="w-full sm:w-auto">
+            <div className="group w-full sm:w-auto px-6 sm:px-8 py-4 glass-premium text-white rounded-2xl font-bold text-base sm:text-lg hover:bg-white/10 transition-all duration-500 relative overflow-hidden flex justify-center">
+              <span className="relative z-10 whitespace-nowrap">Ver Brinquedos</span>
               <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
             </div>
           </MagneticButton>

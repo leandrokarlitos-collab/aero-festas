@@ -1,6 +1,6 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, Variants } from 'framer-motion';
 import { ReactNode } from 'react';
 
 interface TextRevealProps {
@@ -20,7 +20,7 @@ export default function TextReveal({
 }: TextRevealProps) {
   const words = children.split(' ');
 
-  const container = {
+  const container: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -31,7 +31,7 @@ export default function TextReveal({
     },
   };
 
-  const wordVariant = {
+  const wordVariant: Variants = {
     hidden: {
       y: 80,
       opacity: 0,
@@ -43,7 +43,7 @@ export default function TextReveal({
       rotateX: 0,
       transition: {
         duration: 0.6,
-        ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number],
+        ease: [0.25, 0.46, 0.45, 0.94],
       },
     },
   };
@@ -90,7 +90,7 @@ export function TextRevealInline({
 }) {
   const chars = children.split('');
 
-  const container = {
+  const container: Variants = {
     hidden: {},
     visible: {
       transition: {
@@ -100,7 +100,7 @@ export function TextRevealInline({
     },
   };
 
-  const charVariant = {
+  const charVariant: Variants = {
     hidden: { opacity: 0, y: 20, filter: 'blur(8px)' },
     visible: {
       opacity: 1,

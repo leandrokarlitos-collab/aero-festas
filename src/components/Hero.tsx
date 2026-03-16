@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'framer-motion';
+import { motion, useScroll, useTransform, useMotionValue, useSpring, Variants } from 'framer-motion';
 import { useEffect, useState, useRef } from 'react';
 import { FaWhatsapp, FaArrowDown } from 'react-icons/fa';
 
@@ -45,17 +45,17 @@ export default function Hero() {
 
   // Staggered title words animation
   const titleWords = ['Torne', 'sua', 'Festa'];
-  const titleContainer = {
+  const titleContainer: Variants = {
     hidden: {},
     visible: {
       transition: { staggerChildren: 0.12, delayChildren: 0.3 },
     },
   };
-  const titleWord = {
+  const titleWord: Variants = {
     hidden: { y: 80, opacity: 0, rotateX: -40 },
     visible: {
       y: 0, opacity: 1, rotateX: 0,
-      transition: { duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number]},
+      transition: { duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] },
     },
   };
 
